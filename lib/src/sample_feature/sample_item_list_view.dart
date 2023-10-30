@@ -51,16 +51,21 @@ class SampleItemListViewState extends State<SampleItemListView> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          bottom: const TabBar(
-            tabs: <Widget>[
-              Tab(text: 'Основные'),
-              Tab(text: 'Покупки'),
-              Tab(text: 'Видео'),
-            ],
-            indicatorColor: Colors.black,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.black,
-            dividerColor: Colors.transparent,
+          bottom: const PreferredSize(
+            preferredSize: Size.fromHeight(0.0), // Adjust the height as needed
+            child: TabBar(
+              tabs: <Widget>[
+                Tab(text: 'Основные'),
+                Tab(text: 'Покупки'),
+                Tab(text: 'Видео'),
+              ],
+              indicatorColor: Colors.black,
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.black,
+              labelStyle: TextStyle(fontSize: 16), // Adjust the font size
+              labelPadding: EdgeInsets.zero, // Remove padding around labels
+              indicatorWeight: 2.0, // Adjust the indicator thickness
+            ),
           ),
         ),
         body: SafeArea(
