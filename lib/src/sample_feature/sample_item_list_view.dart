@@ -1,77 +1,118 @@
 import 'package:flutter/material.dart';
+import 'package:jectis_todo/src/TaskListItem/TaskListItem.dart';
 
 import '../settings/settings_view.dart';
 import 'sample_item.dart';
 import 'sample_item_details_view.dart';
 
-/// Displays a list of SampleItems.
-class SampleItemListView extends StatelessWidget {
-  const SampleItemListView({
-    super.key,
-    this.items = const [SampleItem(1), SampleItem(2), SampleItem(3)],
-  });
-
-  static const routeName = '/';
-
+class Section {
+  final String title;
   final List<SampleItem> items;
+
+  Section(this.title, this.items);
+}
+
+class SampleItemListView extends StatefulWidget {
+  const SampleItemListView({super.key});
+
+  static const String routeName = '/';
+
+  @override
+  SampleItemListViewState createState() => SampleItemListViewState();
+}
+
+class SampleItemListViewState extends State<SampleItemListView> {
+  late List<Section> sections;
+
+  @override
+  void initState() {
+    super.initState();
+
+    sections = [
+      Section("Прошедшие", [
+        const SampleItem(1),
+        const SampleItem(2),
+        const SampleItem(3),
+      ]),
+      Section("Сегодня", [
+        const SampleItem(1),
+        const SampleItem(2),
+        const SampleItem(3),
+        const SampleItem(3),
+        const SampleItem(3),
+        const SampleItem(3),
+      ]),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-            appBar: AppBar(
-              bottom: const TabBar(
-                tabs: <Widget>[
-                  Tab(text: 'Список'),
-                  Tab(text: 'Отправленные'),
-                  Tab(text: 'Заявки'),
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: <Widget>[
+              Tab(text: 'Основные'),
+              Tab(text: 'Покупки'),
+              Tab(text: 'Видео'),
+            ],
+            indicatorColor: Colors.black,
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.black,
+            dividerColor: Colors.transparent,
+          ),
+        ),
+        body: SafeArea(
+          child: ListView.builder(
+            itemCount: sections.length,
+            itemBuilder: (BuildContext context, int index) {
+              final section = sections[index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 16.0,
+                      left: 28.0,
+                      right: 8.0,
+                      bottom: 4.0,
+                    ),
+                    child: Text(
+                      section.title,
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    restorationId: 'listView_$index',
+                    itemCount: section.items.length,
+                    itemBuilder: (BuildContext context, int itemIndex) {
+                      final item = section.items[itemIndex];
+                      return TaskListItem(
+                        title:
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit ${item.id}',
+                        subtitle: '12:34', // Additional text
+                      );
+                    },
+                  ),
                 ],
-                indicatorColor: Colors.white,
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.white60,
-                dividerColor: Colors.transparent,
-              ),
-            ),
-
-            // To work with lists that may contain a large number of items, it’s best
-            // to use the ListView.builder constructor.
-            //
-            // In contrast to the default ListView constructor, which requires
-            // building all Widgets up front, the ListView.builder constructor lazily
-            // builds Widgets as they’re scrolled into view.
-            body: SafeArea(
-              child: TabBarView(children: [
-                ListView.builder(
-                  // Providing a restorationId allows the ListView to restore the
-                  // scroll position when a user leaves and returns to the app after it
-                  // has been killed while running in the background.
-                  restorationId: 'sampleItemListView',
-                  itemCount: items.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final item = items[index];
-
-                    return ListTile(
-                        title: Text('SampleItem ${item.id}'),
-                        leading: const CircleAvatar(
-                          // Display the Flutter Logo image asset.
-                          foregroundImage:
-                              AssetImage('assets/images/flutter_logo.png'),
-                        ),
-                        onTap: () {
-                          // Navigate to the details page. If the user leaves and returns to
-                          // the app after it has been killed while running in the
-                          // background, the navigation stack is restored.
-                          Navigator.restorablePushNamed(
-                            context,
-                            SampleItemDetailsView.routeName,
-                          );
-                        });
-                  },
-                ),
-                const Text("test"),
-                const Text("test2")
-              ]),
-            )));
+              );
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          tooltip: 'Add task',
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.secondary,
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
   }
 }

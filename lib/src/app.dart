@@ -41,6 +41,28 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
+          theme: ThemeData(
+            colorScheme: const ColorScheme(
+              primary: Colors.black,
+              secondary: Colors.white,
+              surface: Colors.white,
+              background: Colors.white,
+              error: Colors.red,
+              onPrimary: Colors.white,
+              onSecondary: Colors.black,
+              onSurface: Colors.black,
+              onBackground: Colors.black,
+              onError: Colors.white,
+              brightness: Brightness.light,
+            ),
+            useMaterial3: true,
+            // textSelectionTheme: const TextSelectionThemeData(
+            //   selectionColor: Colors.blue, // Set your desired selection color
+            //   cursorColor: Colors.blue, // Set your desired cursor color
+            //   selectionHandleColor: Colors.blue,
+            // ),
+          ),
+
           supportedLocales: const [
             Locale('en', ''), // English, no country code
           ],
@@ -56,9 +78,9 @@ class MyApp extends StatelessWidget {
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the
           // SettingsController to display the correct theme.
-          theme: ThemeData(),
-          darkTheme: ThemeData.dark(),
-          themeMode: settingsController.themeMode,
+          // theme: ThemeData(),
+          // darkTheme: ThemeData.dark(),
+          // themeMode: settingsController.themeMode,
 
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
