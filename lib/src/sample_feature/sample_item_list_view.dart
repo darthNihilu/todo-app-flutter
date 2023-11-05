@@ -100,8 +100,7 @@ class SampleItemListViewState extends State<SampleItemListView> {
                       final item = section.items[itemIndex];
                       return TaskListItem(
                         title:
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit ${item.id}',
-                        subtitle: '12:34', // Additional text
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit${item.id}',
                       );
                     },
                   ),

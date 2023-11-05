@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
       animation: settingsController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
+          title: 'Jectis TODO App',
           // Providing a restorationScopeId allows the Navigator built by the
           // MaterialApp to restore the navigation stack when a user leaves and
           // returns to the app after it has been killed while running in the
@@ -36,12 +37,19 @@ class MyApp extends StatelessWidget {
           // allows descendant Widgets to display the correct translations
           // depending on the user's locale.
           localizationsDelegates: const [
-            AppLocalizations.delegate,
+            AppLocalizations.delegate, // Your localized strings
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
           theme: ThemeData(
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
+            tabBarTheme: TabBarTheme(
+              // This removes the background color change on long press
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+            ),
             colorScheme: const ColorScheme(
               primary: Colors.black,
               secondary: Colors.white,
@@ -62,9 +70,8 @@ class MyApp extends StatelessWidget {
             //   selectionHandleColor: Colors.blue,
             // ),
           ),
-
           supportedLocales: const [
-            Locale('en', ''), // English, no country code
+            Locale('ru'), // Add the supported locale
           ],
 
           // Use AppLocalizations to configure the correct application title
@@ -72,8 +79,8 @@ class MyApp extends StatelessWidget {
           //
           // The appTitle is defined in .arb files found in the localization
           // directory.
-          onGenerateTitle: (BuildContext context) =>
-              AppLocalizations.of(context)!.appTitle,
+          // onGenerateTitle: (BuildContext context) =>
+          //     AppLocalizations.of(context)!.appTitle,
 
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the
